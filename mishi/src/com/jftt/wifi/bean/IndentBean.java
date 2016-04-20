@@ -28,7 +28,7 @@ public class IndentBean implements Serializable {
 	public float getPrice() {
 		return price;
 	}
-	public void setPrice(long price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 	public String getContent() {
