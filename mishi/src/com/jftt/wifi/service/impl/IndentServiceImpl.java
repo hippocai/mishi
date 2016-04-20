@@ -64,7 +64,15 @@ public class IndentServiceImpl implements IndentService {
 	@Override
 	public boolean deleteIndentById(long id) {
 		// TODO 自动生成的方法存根
-		return false;
+		try{
+			Map<String,String>map=new HashMap<String,String>();
+			map.put("indentId", id+"");
+			this.deleteIndentByMap(map);
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
