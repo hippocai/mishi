@@ -1,0 +1,246 @@
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>今日数据</title>
+
+<link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/css/page.css" />
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js" ></script>
+
+<style type="text/css">
+body{
+font-family: "微软雅黑";
+}
+.data_circle td{
+	width: 300px;
+}
+.circle_title{
+	font-size: 14px;
+	font-weight: bold;
+	color: #333333;
+	margin: 10px 0px;
+	letter-spacing: 2px;
+}
+.circle_div{
+	margin: 0px 40px;
+	width: 120px;
+	height: 120px;
+	background-color: #32AF12;
+	border-radius: 60px;
+	color: #FFFFFF;
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 120px;
+}
+
+.title_div{
+	border-bottom: none 0;
+}
+.data_table .colum_name{
+	height: 22px;
+	
+}
+</style>
+
+<script type="text/javascript">
+
+$(function(){
+	
+});
+
+</script>
+</head>
+
+<body >
+	
+	<div class="" align="center">
+		
+		<div style="width:900px;">
+			<table class="data_circle" style="width:100%;border-collapse: collapse;" >
+				<tr align="center" valign="top">
+					<td>
+						<div class="circle_title">今日新增用户</div>
+						<div class="circle_div">366</div>
+					</td>
+					<td>
+						<div class="circle_title">今日订单数</div>
+						<div class="circle_div">2344</div>
+					</td>
+					<td>
+						<div class="circle_title">今日销售额</div>
+						<div class="circle_div">32966</div>
+					</td>
+				</tr>
+			</table>
+	
+			<div style="margin-top:10px;"></div>
+			
+					
+			<table class="data_table" style="width:400px;float:left;border-left:1px solid #DDDDDD;">
+				<tr>
+					<td colspan="5" style="padding:0px;">
+						<div class="title_div" align="left" >菜品销量TOP10</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="colum_name" align="center">排名</td>
+					<td class="colum_name" align="center">菜名</td>
+					<td class="colum_name" align="center">单价</td>
+					<td class="colum_name" align="center">销量</td>
+					<td class="colum_name" align="center">总销售额</td>
+				</tr>
+				<tr>
+					<td align="center" >1</td>
+					<td align="center" >鱼香肉丝</td>
+					<td align="center">20</td>
+					<td align="center">213</td>
+					<td align="center">4260</td>
+				</tr>
+				<tr>
+					<td align="center" >2</td>
+					<td align="center" >鱼香肉丝</td>
+					<td align="center">20</td>
+					<td align="center">213</td>
+					<td align="center">4260</td>
+				</tr>
+				<tr>
+					<td align="center" >3</td>
+					<td align="center" >鱼香肉丝</td>
+					<td align="center">20</td>
+					<td align="center">213</td>
+					<td align="center">4260</td>
+				</tr>
+				<tr>
+					<td align="center" >4</td>
+					<td align="center" >鱼香肉丝</td>
+					<td align="center">20</td>
+					<td align="center">213</td>
+					<td align="center">4260</td>
+				</tr>
+				<tr>
+					<td align="center" >5</td>
+					<td align="center" >鱼香肉丝</td>
+					<td align="center">20</td>
+					<td align="center">213</td>
+					<td align="center">4260</td>
+				</tr>
+				<tr>
+					<td align="center" >6</td>
+					<td align="center" >鱼香肉丝</td>
+					<td align="center">20</td>
+					<td align="center">213</td>
+					<td align="center">4260</td>
+				</tr>
+				<tr>
+					<td align="center" >7</td>
+					<td align="center" >鱼香肉丝</td>
+					<td align="center">20</td>
+					<td align="center">213</td>
+					<td align="center">4260</td>
+				</tr>
+				<tr>
+					<td align="center" >8</td>
+					<td align="center" >鱼香肉丝</td>
+					<td align="center">20</td>
+					<td align="center">213</td>
+					<td align="center">4260</td>
+				</tr>
+				<tr>
+					<td align="center" >9</td>
+					<td align="center" >鱼香肉丝</td>
+					<td align="center">20</td>
+					<td align="center">213</td>
+					<td align="center">4260</td>
+				</tr>
+				<tr>
+					<td align="center" >10</td>
+					<td align="center" >鱼香肉丝</td>
+					<td align="center">20</td>
+					<td align="center">213</td>
+					<td align="center">4260</td>
+				</tr>
+			</table>
+		
+			<table class="data_table" style="width:400px;float:right;border-left:1px solid #DDDDDD;">
+				<tr>
+					<td colspan="4" style="padding:0px;">
+						<div class="title_div" align="left" >配送点销量TOP10</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="colum_name" align="center">排名</td>
+					<td class="colum_name" align="center">配送点</td>
+					<td class="colum_name" align="center">销量</td>
+					<td class="colum_name" align="center">总销售额</td>
+				</tr>
+				<tr>
+					<td align="center" >1</td>
+					<td align="center" >高新区枫桥配送点</td>
+					<td align="center">420</td>
+					<td align="center">6200</td>
+				</tr>
+				<tr>
+					<td align="center" >2</td>
+					<td align="center" >高新区枫桥配送点</td>
+					<td align="center">420</td>
+					<td align="center">6200</td>
+				</tr>
+				<tr>
+					<td align="center" >3</td>
+					<td align="center" >高新区枫桥配送点</td>
+					<td align="center">420</td>
+					<td align="center">6200</td>
+				</tr>
+				<tr>
+					<td align="center" >4</td>
+					<td align="center" >高新区枫桥配送点</td>
+					<td align="center">420</td>
+					<td align="center">6200</td>
+				</tr>
+				<tr>
+					<td align="center" >5</td>
+					<td align="center" >高新区枫桥配送点</td>
+					<td align="center">420</td>
+					<td align="center">6200</td>
+				</tr>
+				<tr>
+					<td align="center" >6</td>
+					<td align="center" >高新区枫桥配送点</td>
+					<td align="center">420</td>
+					<td align="center">6200</td>
+				</tr>
+				<tr>
+					<td align="center" >7</td>
+					<td align="center" >高新区枫桥配送点</td>
+					<td align="center">420</td>
+					<td align="center">6200</td>
+				</tr>
+				<tr>
+					<td align="center" >8</td>
+					<td align="center" >高新区枫桥配送点</td>
+					<td align="center">420</td>
+					<td align="center">6200</td>
+				</tr>
+				<tr>
+					<td align="center" >9</td>
+					<td align="center" >高新区枫桥配送点</td>
+					<td align="center">420</td>
+					<td align="center">6200</td>
+				</tr>
+				<tr>
+					<td align="center" >10</td>
+					<td align="center" >高新区枫桥配送点</td>
+					<td align="center">420</td>
+					<td align="center">6200</td>
+				</tr>
+			</table>
+			
+		</div>
+			
+	</div>
+	
+</body>
+
+</html>

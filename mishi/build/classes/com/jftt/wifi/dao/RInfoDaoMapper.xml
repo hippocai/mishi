@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jftt.wifi.dao.RInfoDaoMapper">
+    <!--   
+	 	uid
+		loginName
+		passwd
+     -->
+	<resultMap id="RInfoBean" type="com.jftt.wifi.bean.RInfoBean">
+			<id property="uid" column="uid"/>
+			<result property="userId" column="userId"/>
+			<result property="loginName" column="loginName"/>
+			<result property="passwd" column="passwd"/>
+	</resultMap>
+	<sql id="RInfoSearchMap">
+		<trim prefix="where" prefixOverrides="AND">
+			<if test="loginName != null and loginName != '' ">
+				AND loginName=#{loginName}
+			</if>
+			<if test="passwd != null and passwd != '' ">
+				AND passwd=#{passwd}
+			</if>
+			<if test="uid != null and uid != '' ">
+				AND uid=#{uid}
+			</if>
+			
+		</trim>
+	</sql>
+	
+	<sql id="RInfo_protery">
+	    uid,
+		loginName,
+		passwd,
+	</sql>
+	
+	<select id="getRInfoBeanByMap" resultMap="RInfoBean" parameterType="java.util.HashMap">
+		select 
+			<include refid="RInfo_protery"/>
+		from 
+			RInfo
+			<include refid="RInfoSearchMap"/>
+	</select>
+	
+	<insert id="insertRInfo" parameterType="com.jftt.wifi.bean.RInfoBean" useGeneratedKeys="true" keyProperty="uid">
+		insert into RInfo
+			(loginName,passwd)
+		values 
+			(#{loginName},#{passwd})
+	</insert>
+	<delete id="deleteRInfoByMap" >
+		delete from RInfo <include refid="RInfoSearchMap"/>
+	</delete>
+	
+	</mapper>

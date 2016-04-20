@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jftt.wifi.dao.RateDaoMapper">
+    <!--   
+	    userId
+		uId
+		commentId
+		content
+
+     -->
+	<resultMap id="RateBean" type="com.jftt.wifi.bean.RateBean">
+			<id property="commentId" column="commentId"/>
+			<result property="userId" column="userId"/>
+			<result property="uId" column="uId"/>
+			<result property="content" column="content"/>
+	</resultMap>
+	<sql id="RateSearchMap">
+		<trim prefix="where" prefixOverrides="AND">
+			<if test="commentId != null and commentId != '' ">
+				AND commentId=#{commentId}
+			</if>
+			<if test="userId != null and userId != '' ">
+				AND userId=#{userId}
+			</if>
+			<if test="uId != null and uId != '' ">
+				AND uId=#{uId}
+			</if>
+			<if test="content != null and content != '' ">
+				AND content=#{content}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="rate_protery">
+	    userId,
+		uId,
+		commentId,
+		content
+	</sql>
+	
+	<select id="getRateBeanByMap" resultMap="RateBean" parameterType="java.util.HashMap">
+		select 
+			<include refid="rate_protery"/>
+		from 
+			rate
+			<include refid="RateSearchMap"/>
+	</select>
+	
+	<insert id="insertRateByBean" parameterType="com.jftt.wifi.bean.RateBean" useGeneratedKeys="true" keyProperty="commentId">
+		insert into rate
+			(userId,uId,commentId,content)
+		values 
+			(#{userId}, #{uId},#{commentId},#{content})
+	</insert>
+	<delete id="deleteRateByMap" >
+		delete from rate <include refid="RateSearchMap"/>
+	</delete>
+	
+	</mapper>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jftt.wifi.dao.MenuItemDaoMapper">
+    <!--   
+    	uId
+		itemId
+		itemName
+		itemPic
+		itemPrice
+     -->
+	<resultMap id="MenuItemBean" type="com.jftt.wifi.bean.MenuItemBean">
+			<id property="itemId" column="itemId"/>
+			<result property="uId" column="uId"/>
+			<result property="itemName" column="itemName"/>
+			<result property="itemPic" column="itemPic"/>
+			<result property="itemPrice" column="itemPrice"/>
+	</resultMap>
+	<sql id="menuItemSearchMap">
+		<trim prefix="where" prefixOverrides="AND">
+			<if test="uId != null and uId != '' ">
+				AND uId=#{uId}
+			</if>
+			<if test="itemId != null and itemId != '' ">
+				AND itemId=#{itemId}
+			</if>
+			<if test="itemName != null and itemName != '' ">
+				AND itemName=#{itemName}
+			</if>
+			<if test="itemPic != null and itemPic != '' ">
+				AND itemPic=#{itemPic}
+			</if>
+			<if test="itemPrice != null and itemPrice != '' ">
+				AND itemPrice=#{itemPrice}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="menuItem_protery">
+		uId,
+		itemId,
+		itemName,
+		itemPic,
+		itemPrice
+	</sql>
+	
+	<select id="getMenuItemByMap" resultMap="MenuItemBean" parameterType="java.util.HashMap">
+		select 
+			<include refid="menuItem_protery"/>
+		from 
+			menuitem
+			<include refid="menuItemSearchMap"/>
+	</select>
+	
+	<insert id="insertMenuItemByBean" parameterType="com.jftt.wifi.bean.MenuItemBean" useGeneratedKeys="true" keyProperty="itemId">
+		insert into menuitem
+			(uId,itemId,itemName,itemPic,itemPrice)
+		values 
+			(#{uId},#{itemId}, #{itemName},#{itemPic},#{itemPrice})
+	</insert>
+	<delete id="deleteMenuItemByMap" >
+		delete from menuitem <include refid="menuItemSearchMap"/>
+	</delete>
+	
+	<update id="updateMenuItemByBean" parameterType="com.jftt.wifi.bean.MenuItemBean">
+		update menuitem set 
+		<trim suffixOverrides=",">
+			<if test="itemId != null and itemId != '' ">
+				itemId = #{itemId},
+			</if>
+			<if test="uId != null and uId != '' ">
+				uId = #{uId},
+			</if>
+			<if test="itemName != null and itemName != '' ">
+				itemName = #{itemName},
+			</if>
+			<if test="itemPic != null and itemPic != '' ">
+				itemPic = #{itemPic},
+			</if>
+			<if test="itemPrice != null and itemPrice != '' ">
+				itemPrice = #{itemPrice},
+			</if>
+		</trim>
+		where itemId=#{itemId}
+	</update>
+	
+	</mapper>

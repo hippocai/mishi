@@ -1,0 +1,219 @@
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>数据库备份设置</title>
+<link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/css/page.css"/>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js" ></script>
+<!-- ligerUI -->
+<link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/js/LigerUI V1.2.5/skins/Aqua/css/ligerui-all.css"/>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/LigerUI V1.2.5/ligerui.all.js" ></script>
+<!-- validation -->
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-validation/jquery.validate.js"></script>
+<!-- debug -->
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/consoleDebug.js"></script>
+
+<style type="text/css">
+
+.param_table td{
+	padding: 2px;
+}
+.param_table .input_0{
+	width: 200px;
+}
+
+.first_div {
+	background-color: #FFFFFF;
+	margin: 5px;
+	border: 1px solid #E5E9EA;
+	min-height: 160px;
+}
+
+.need_span{color:red;font-size:13px;}
+.validation_span{color:red;font-size:13px;}
+.l-table-edit {}
+.l-table-edit-td{ padding:4px;}
+.l-button-submit,.l-button-reset{width:80px; float:left; margin-left:10px; padding-bottom:2px;}
+.l-verify-tip{ left:230px; top:120px;}
+#tempConfig{
+margin-left: auto;
+margin-right: auto;
+width: 380px;
+}
+</style>
+
+<script type="text/javascript">
+$(init);
+var config=${config};
+function init(){
+	console.dir(config);
+
+	$("form").ligerForm();
+	fillData();
+	$("#day").find(".l-text").css("width","30px");
+	$("#day").find("input").css("width","30px");
+}
+
+
+function fillData(){
+$("#DBAddress").val(config.DBAddress);
+$("#DBName").val(config.DBName);
+$("#UserName").val(config.userName);
+$("#Password").val(config.password);
+$("#Port").val(config.port);
+$("#LocalAdd").val(config.localAdd);
+$("#Timer").val(config.timer);
+}
+function beforeSave(){
+
+config.DBAddress=$("#DBAddress").val();
+config.DBName=$("#DBName").val();
+config.userName=$("#UserName").val();
+config.password=$("#Password").val();
+config.port=$("#Port").val();
+config.localAdd=$("#LocalAdd").val();
+config.timer=$("#Timer").val();
+if(!parseInt(config.timer)){
+	$.ligerDialog.warn("备份天数请填入有效数字。","ERROR");
+	return false;
+}else{
+	if(parseInt(config.timer)>27){
+		$.ligerDialog.warn("备份天数不得大于27。","ERROR");
+		return  false;
+	}
+}
+updataConfigInfo(config);
+}
+
+function validate(){
+	
+}
+
+function browseFolder() {
+    try {
+		console.info("browse");
+        var Message = "\u8bf7\u9009\u62e9\u6587\u4ef6\u5939"; //选择框提示信息
+        var Shell = new ActiveXObject("Shell.Application");
+        var Folder = Shell.BrowseForFolder(0, Message, 64, 17); //起始目录为：我的电脑
+        //var Folder = Shell.BrowseForFolder(0, Message, 0); //起始目录为：桌面
+        if (Folder != null) {
+            Folder = Folder.items(); // 返回 FolderItems 对象
+            Folder = Folder.item(); // 返回 Folderitem 对象
+            Folder = Folder.Path; // 返回路径
+            if (Folder.charAt(Folder.length - 1) != "\\") {
+                Folder = Folder + "\\";
+            }
+            return Folder;
+        }
+    }
+    catch (e) {
+        console.error(e.message);
+    }
+}
+
+function updataConfigInfo(config){
+	$.ajax({
+		type:"POST",
+		url:"<%=request.getContextPath()%>/dbBackup/updateDBconfig.action",
+		data:config,
+		success:function(data){
+			if(data=="SUCCESS"){
+				$.ligerDialog.success("更新成功","提示");
+			}else{
+				console.dir(data);
+				$.ligerDialog.error("更新失败，出现内部错误，请与管理员联系。","ERROR");
+			}
+		},
+		error:function(data){
+			console.dir(data);
+			$.ligerDialog.error("更新失败，请检查网络连接是否正常，并刷新页面。","ERROR");
+		}	
+	});
+}
+
+
+function setDafaultValue(){
+$("#DBAddress").val("localhost");
+$("#DBName").val("dwlc");
+$("#UserName").val("root");
+$("#Password").val("123456");
+$("#Port").val("3306");
+$("#LocalAdd").val("D:\\DBBackup");
+$("#Timer").val("1");
+}
+
+</script>
+</head>
+<body>
+
+	<div class="first_div">
+		<div class="title_div search_text" >数据库备份设置</div>
+		
+		<div class="search_div">
+		<div id="tempConfig">
+		<form>
+			<table cellpadding="0" cellspacing="0" class="l-table-edit" >
+            <tr>
+                <td align="right" class="l-table-edit-td">数据库地址:</td>
+                <td align="left" class="l-table-edit-td">
+                	<input type="text" id="DBAddress" name="DBAddress"/>
+                </td>
+				<td align="left" class="l-table-edit-td"></td>
+            </tr>
+            <tr>
+                <td align="right" class="l-table-edit-td">数据库名称:</td>
+                <td align="left" class="l-table-edit-td">
+                	<input type="text" id="DBName" name="DBName"/>
+                </td>
+				<td align="left" class="l-table-edit-td"></td>
+            </tr>
+            <tr>
+                <td align="right" class="l-table-edit-td">用户名:</td>
+                <td align="left" class="l-table-edit-td">
+                	<input type="text" id="UserName" name="UserName"/>
+                </td>
+				<td align="left" class="l-table-edit-td"></td>
+            </tr>
+            <tr>
+                <td align="right" class="l-table-edit-td">密码:</td>
+                <td align="left" class="l-table-edit-td">
+               		 <input type="text" id="Password" name="Password"/>
+                </td>
+				<td align="left" class="l-table-edit-td"></td>
+            </tr>
+			<tr>
+                <td align="right" class="l-table-edit-td">端口号:</td>
+                <td align="left" class="l-table-edit-td">
+               		 <input type="text" id="Port" name="Port"/>
+                </td>
+				<td align="left" class="l-table-edit-td"></td>
+            </tr>
+			<tr>
+                <td align="right" class="l-table-edit-td">实际路径:</td>
+                <td align="left" class="l-table-edit-td">
+               		 <input type="text" id="LocalAdd" name="LocalAdd"/>
+                </td>
+				<td align="left" class="l-table-edit-td"></td>
+            </tr>
+			<tr id="day">
+                <td align="right" class="l-table-edit-td">每月</td>
+                <td align="left" class="l-table-edit-td">
+               		 <input type="text" id="Timer" name="Timer"style="width:30px"/>
+                </td>
+				<td align="left" class="l-table-edit-td"><span style="display:inline-block;margin-left: -150px;">日进行备份</span></td>
+            </tr>
+        </table>
+		</form>
+		</div>
+		</div>
+					
+	</div>
+	
+	<div align="right" style="margin-right:100px;">
+		<button class="btu_0" onclick="beforeSave()">保存</button>
+		<button class="btu_0" id="defaultBtu" onclick="setDafaultValue()">恢复默认设置</button>
+	</div>
+
+</body>
+</html>

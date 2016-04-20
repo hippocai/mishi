@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jftt.wifi.dao.UserDaoMapper">
+    <!--   
+	 	userId
+		loginName
+		passwd
+     -->
+	<resultMap id="UserBean" type="com.jftt.wifi.bean.UserBean">
+			<id property="userId" column="userId"/>
+			<result property="userId" column="userId"/>
+			<result property="loginName" column="loginName"/>
+			<result property="passwd" column="passwd"/>
+	</resultMap>
+	<sql id="UserSearchMap">
+		<trim prefix="where" prefixOverrides="AND">
+			<if test="loginName != null and loginName != '' ">
+				AND loginName=#{loginName}
+			</if>
+			<if test="passwd != null and passwd != '' ">
+				AND passwd=#{passwd}
+			</if>
+			<if test="userId != null and userId != '' ">
+				AND userId=#{userId}
+			</if>
+			
+		</trim>
+	</sql>
+	
+	<sql id="User_protery">
+	    userId,
+		loginName,
+		passwd
+	</sql>
+	
+	<select id="getUserByMap" resultMap="UserBean" parameterType="java.util.HashMap">
+		select 
+			<include refid="User_protery"/>
+		from 
+			user
+			<include refid="UserSearchMap"/>
+	</select>
+	
+	<insert id="insertUserByBean" parameterType="com.jftt.wifi.bean.UserBean" useGeneratedKeys="true" keyProperty="userId">
+		insert into user
+			(loginName,passwd)
+		values 
+			(#{loginName},#{passwd})
+	</insert>
+	<delete id="deleteUserByMap" >
+		delete from user <include refid="UserSearchMap"/>
+	</delete>
+	<update id="updateUserByBean" parameterType="com.jftt.wifi.bean.UserBean">
+		update user set 
+		<trim suffixOverrides=",">
+			<if test="userId != null and userId != '' ">
+				userId = #{userId},
+			</if>
+			<if test="loginName != null and loginName != '' ">
+				loginName = #{loginName},
+			</if>
+			<if test="passwd != null and passwd != '' ">
+				passwd = #{passwd},
+			</if>
+		</trim>
+		where userId = #{userId}
+	</update>
+	</mapper>

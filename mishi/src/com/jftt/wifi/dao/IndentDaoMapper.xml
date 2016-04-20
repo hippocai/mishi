@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jftt.wifi.dao.IndentDaoMapper">
+	<resultMap id="IndentBean" type="com.jftt.wifi.bean.IndentBean">
+			<id property="indentId" column="indentId"/>
+			<result property="uid" column="uid"/>
+			<result property="userId" column="userId"/>
+			<result property="price" column="price"/>
+			<result property="content" column="content"/>
+	</resultMap>
+	<sql id="indentSearchMap">
+		<trim prefix="where" prefixOverrides="AND">
+			<if test="indentId != null and indentId != '' ">
+				AND indentId=#{indentId}
+			</if>
+			<if test="uid != null and uid != '' ">
+				AND uid=#{uid}
+			</if>
+			<if test="userId != null and userId != '' ">
+				AND userId=#{userId}
+			</if>
+			<if test="price != null and price != '' ">
+				AND price=#{price}
+			</if>
+			<if test="content != null and content != '' ">
+				AND content=#{content}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="indent_protery">
+		indentId,
+		uid,
+		userId,
+		price,
+		content
+	</sql>
+	
+	<select id="getIndentByMap" resultMap="IndentBean" parameterType="java.util.HashMap">
+		select 
+			<include refid="indent_protery"/>
+		from 
+			indent
+			<include refid="indentSearchMap"/>
+	</select>
+	
+	<insert id="insertIndentByBean" parameterType="com.jftt.wifi.bean.IndentBean" useGeneratedKeys="true" keyProperty="indentId">
+		insert into indent
+			(uid,userId,price,content)
+		values 
+			(#{uid},#{userId},#{price},#{content})
+	</insert>
+	<delete id="deleteIndentByMap" >
+		delete from indent <include refid="indentSearchMap"/>
+	</delete>
+	
+	<update id="updateIndentByBean" parameterType="com.jftt.wifi.bean.IndentBean">
+		update indent set 
+		<trim suffixOverrides=",">
+			<if test="uid != null and uid != '' ">
+				uid = #{uid},
+			</if>
+			<if test="userId != null and userId != '' ">
+				userId = #{userId},
+			</if>
+			<if test="price != null and price != '' ">
+				price = #{price},
+			</if>
+			<if test="content != null and content != '' ">
+				content = #{content},
+			</if>
+		</trim>
+		where indentId=#{indentId}
+	</update>
+</mapper>
